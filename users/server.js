@@ -34,7 +34,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-const users = [{ id: 1, name: 'Alice', password: 'password1' }, { id: 2, name: 'Bob', password: 'password2' }];
+const users = [{ id: 1, username: 'Alice', password: 'password1', role: 'admin' }, { id: 2, username: 'Bob', password: 'password2', role: 'user' }];
 
 app.use(express.json());
 app.get('/users', authenticateToken, (req, res) => res.json(users));
@@ -49,7 +49,7 @@ app.delete('/users/:id', authenticateToken, (req, res) => {
 });
 
 app.get('/users/username/:username', (req, res) => {
-  const user = users.find(u => u.name === req.params.username);
+  const user = users.find(u => u.username === req.params.username);
   if (!user) return res.status(404).json({ error: 'User not found' });
   res.json(user);
 });

@@ -7,8 +7,10 @@ function authenticateToken(req, res, next) {
 
     jwt.verify(token, SECRET, (err, user) => {
         if (err) return res.status(403).json({ error: 'Invalid token' });
+        console.log('user : ', user);
+        console.log('req user : ', req.user);
         req.user = user; // Attache l'utilisateur décodé à la requête
-        next(); 
+        next();
     });
 }
 

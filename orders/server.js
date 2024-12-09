@@ -75,6 +75,7 @@ app.get('/orders/:userid', authenticateToken, (req, res) => {
     console.log("order : ", order);
     console.log("req : ", req.params.userid);
     console.log("req 2 : ", req.user.id);
+    console.log("req 3 : ", req.user);
     if(req.user.role !== 'admin' && req.user.id !== parseInt(req.params.userid)) return res.status(403).json({ error: 'Forbidden' });
     if (!order) return res.status(404).json({ error: 'No order found' });
     res.json(order);

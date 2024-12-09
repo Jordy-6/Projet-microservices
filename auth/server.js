@@ -23,9 +23,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-const users = [{ id: 1, username: 'Alice', password: 'password1', role: 'admin' }, { id: 2, username: 'Bob', password: 'password2', role: 'user' }];
-
 app.use(express.json());
 
 app.post('/login', async (req, res) => {
@@ -42,7 +39,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Génère le token JWT
-    const token = jwt.sign({ id: user.id, username: user.username }, SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
     if (error.response?.status === 404) {
