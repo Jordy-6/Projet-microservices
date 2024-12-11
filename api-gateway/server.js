@@ -29,6 +29,26 @@ app.get('/users', authenticateToken, async (req, res) => {
   }
 });
 
+app.delete('/users/:id', authenticateToken, async (req, res) => {
+  try {
+    const response = await axios.delete(`http://localhost:3001/users/${req.params.id}`, {
+      headers: { Authorization: req.headers.authorization },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json(error.response?.data || { error: 'Internal server error' });
+  }
+});
+
+app.get('/users/username/:username', async (req, res) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/users/username/${req.params.username}`);
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json(error.response?.data || { error: 'Internal server error' });
+  }
+});
+
 // Routage vers le service Orders
 app.get('/orders', authenticateToken, async (req, res) => {
   try {
@@ -78,6 +98,17 @@ app.get('/products', authenticateToken, async (req, res) => {
 app.post('/products', authenticateToken, async (req, res) => {
   try {
     const response = await axios.post('http://localhost:3003/products', req.body, {
+      headers: { Authorization: req.headers.authorization },
+    });
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json(error.response?.data || { error: 'Internal server error' });
+  }
+});
+
+app.get('/products/:id', authenticateToken, async (req, res) => {
+  try {
+    const response = await axios.get(`http://localhost:3003/products/${req.params.id}`, {
       headers: { Authorization: req.headers.authorization },
     });
     res.status(response.status).json(response.data);

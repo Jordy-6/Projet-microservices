@@ -68,7 +68,9 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Order'
+ *              type: array
+ *             items:
+ *              $ref: '#/components/schemas/Order'
  *       404:
  *         description: Order not found
  *         content:
